@@ -1,2 +1,4 @@
-torch >= 1.7.1
+--find-links https://download.pytorch.org/whl/metal.html  # For installing older versions of torch
+torch==2.5.0  # Required for CoreML
 torchvision
+coremltools
