@@ -8,7 +8,7 @@ from coreml_wrapper import CoreMLWrapper
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 weights_dir = os.path.join(SCRIPT_DIR, "weights")
-coreml_dir = os.path.join(SCRIPT_DIR, "CoreML_Models")
+coreml_dir = os.path.join(SCRIPT_DIR, "coreml_models")
 
 def convert_to_coreml(
     pytorch_weights_filename="face_paint_512_v1.pt",
