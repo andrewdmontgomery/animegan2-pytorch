@@ -126,4 +126,32 @@ Trained on <b>512x512</b> face images. Compared to v1, `🔻beautify` `🔺robus
 
 </details>
 
+## CoreML Conversion
+CoreML conversions support versions of Python up to 3.11, and the `torch` module up to `2.5.0`.
 
+1. Install python 3.11 (Latest supported version by CoreML)
+2. [Optional] Setup a virtual environment
+```shell
+python3.11 -m venv venv
+. venv/bin/activate
+# Run `deactivate` to deactivate the virtual environment
+```
+3. Install requirements
+```shell
+pip install -r requirements
+```
+4. Convert the models
+```shell
+python convert_to_coreml.py
+```
+5. Test the CoreML models
+```shell
+# Use a default sample image
+python coreml_test.py
+
+# Or specify a path to another input image
+python coreml_test.py /path/to/input_image.jpg
+```
+
+### Wrapping the model
+The original model outputs an ImageType with normalized color values in the range [-1, 1]. CoreML expects those values to be restored to their 8-bit range [0, 255].  The CoreMLWrapper class handles this post-processing.  Without this, CoreML will assume that the values are 8-bit, which will mean most of the values will be near zero, leaving you with an image that looks entirely black.

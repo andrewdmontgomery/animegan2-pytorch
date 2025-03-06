@@ -106,5 +106,6 @@ class Generator(nn.Module):
         out = self.block_e(out)
 
         out = self.out_layer(out)
+
         return out
         
