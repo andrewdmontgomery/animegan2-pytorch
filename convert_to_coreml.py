@@ -4,7 +4,7 @@ import torch
 import torchvision.io as io
 import coremltools as ct
 import os
-from model import Generator
+from CoreMLWrapper import CoreMLWrapper
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 weights_dir = os.path.join(SCRIPT_DIR, "weights")
@@ -18,8 +18,8 @@ def convert_to_coreml(
     coreml_model_path = os.path.join(coreml_dir, coreml_package_filename)
 
     # Instantiate model and load weights.
-    model = Generator()
-    model.load_state_dict(torch.load(pytorch_model_path, map_location="cpu", weights_only=True))
+    model = CoreMLWrapper()
+    model.generator.load_state_dict(torch.load(pytorch_model_path, map_location="cpu", weights_only=True))
     model.eval()
 
     # Create a dummy input of the fixed shape used during export.

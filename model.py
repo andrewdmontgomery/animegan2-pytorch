@@ -107,8 +107,5 @@ class Generator(nn.Module):
 
         out = self.out_layer(out)
 
-        out = torch.clamp(out, -1, 1) + 1
-        out = out * (255.0 / 2)
-
         return out
         
