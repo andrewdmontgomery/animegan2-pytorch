@@ -93,18 +93,20 @@ class Generator(nn.Module):
         out = self.block_b(out)
         out = self.block_c(out)
         
-        if align_corners:
-            out = F.interpolate(out, half_size, mode="bilinear", align_corners=True)
-        else:
-            out = F.interpolate(out, scale_factor=2, mode="bilinear", align_corners=False)
+        upsample = nn.Upsample(scale_factor=2, mode="bilinear", align_corners=False)
+        out = upsample(out)
         out = self.block_d(out)
 
-        if align_corners:
-            out = F.interpolate(out, input.size()[-2:], mode="bilinear", align_corners=True)
-        else:
-            out = F.interpolate(out, scale_factor=2, mode="bilinear", align_corners=False)
+        upsample = nn.Upsample(scale_factor=2, mode="bilinear", align_corners=False)
+        out = upsample(out)
+
         out = self.block_e(out)
 
         out = self.out_layer(out)
+
+        # CoreML expects the color values to be [0, 255]
+        out = torch.clamp(out, -1, 1) + 1
+        out = out * (255.0 / 2)
+
         return out
         
