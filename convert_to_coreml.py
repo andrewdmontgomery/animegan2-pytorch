@@ -10,6 +10,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 weights_dir = os.path.join(SCRIPT_DIR, "weights")
 coreml_dir = os.path.join(SCRIPT_DIR, "coreml_models")
 
+
 def convert_to_coreml(
     pytorch_weights_filename="face_paint_512_v1.pt",
     coreml_package_filename="FacePaintV1.mlpackage"
@@ -19,7 +20,8 @@ def convert_to_coreml(
 
     # Instantiate model and load weights.
     model = CoreMLWrapper()
-    model.generator.load_state_dict(torch.load(pytorch_model_path, map_location="cpu", weights_only=True))
+    model.generator.load_state_dict(torch.load(
+        pytorch_model_path, map_location="cpu", weights_only=True))
     model.eval()
 
     # Create a dummy input of the fixed shape used during export.
@@ -41,10 +43,10 @@ def convert_to_coreml(
     #                             3,
     #                             ct.RangeDim(lower_bound=25, upper_bound=2048, default=1024),
     #                             ct.RangeDim(lower_bound=25, upper_bound=2048, default=1024)))
-    
+
     input_shape = ct.EnumeratedShapes(shapes=[[1, 3, 256, 256],
                                               [1, 3, 1024, 1024]],
-                                              default=[1, 3, 256, 256])
+                                      default=[1, 3, 256, 256])
 
     # Convert to Core ML
     mlmodel = ct.convert(
@@ -71,6 +73,7 @@ def convert_to_coreml(
 
     mlmodel.save(coreml_model_path)
     print(f"Core ML model saved to {coreml_model_path}")
+
 
 if __name__ == "__main__":
     if not os.path.exists(coreml_dir):
