@@ -4,7 +4,7 @@ import torch
 import torchvision.io as io
 import coremltools as ct
 import os
-from CoreMLWrapper import CoreMLWrapper
+from coreml_wrapper import CoreMLWrapper
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 weights_dir = os.path.join(SCRIPT_DIR, "weights")
