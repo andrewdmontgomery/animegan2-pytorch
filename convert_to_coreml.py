@@ -49,6 +49,8 @@ def convert_to_coreml(
     # Convert to Core ML
     mlmodel = ct.convert(
         traced_model,
+        convert_to="mlprogram",
+        minimum_deployment_target=ct.target.iOS15,
         inputs=[
             ct.ImageType(
                 name="input_image",
